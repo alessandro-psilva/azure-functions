@@ -8,19 +8,20 @@ import logging
 bp = func.Blueprint()
 
 
-@bp.function_name(name='hook')
-@bp.route(route='hook', auth_level=func.AuthLevel.ANONYMOUS, methods=['POST'])
+@bp.function_name(name="hook")
+@bp.route(route="hook", auth_level=func.AuthLevel.ANONYMOUS, methods=["POST"])
 def hook(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('[hook] HTTP trigger function processed a request.')
+    logging.info("[hook] HTTP trigger function processed a request.")
     req_body = req.get_json()
-    hook = req_body.get('hook', '')
+    hook = req_body.get("hook", "")
 
     if hook:
-        logging.info(f'Req Body: {req_body}')
+        logging.info(f"Req Body: {req_body}")
         response = requests.post(
-            url='https://webhook.site/912436ea-f2b4-4836-9086-9cfef7259a3f', json=req_body)
+            url="https://webhook.site/912436ea-f2b4-4836-9086-9cfef7259a3f",
+            json=req_body,
+        )
 
-        return func.HttpResponse(json.dumps({'hook': response.text}), status_code=200)
+        return func.HttpResponse(json.dumps({"hook": response.text}), status_code=200)
     else:
-        return func.HttpResponse(json.dumps({'hook': 'Null'}), status_code=400)
-    
+        return func.HttpResponse(json.dumps({"hook": "Null"}), status_code=400)
