@@ -22,6 +22,10 @@ def hook(req: func.HttpRequest) -> func.HttpResponse:
             json=req_body,
         )
 
-        return func.HttpResponse(json.dumps({"hook": response.text}), status_code=200)
+        return func.HttpResponse(
+            json.dumps({"ResponseHook": response.text}), status_code=200
+        )
     else:
-        return func.HttpResponse(json.dumps({"hook": "Null"}), status_code=400)
+        return func.HttpResponse(
+            json.dumps({"RequestHook": "Input Null"}), status_code=400
+        )
